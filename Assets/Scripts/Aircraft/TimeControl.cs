@@ -1,5 +1,5 @@
 ﻿/*
- *Written by Maxi Levi <maxilevi@live.com>, November 2017
+ *Written by Avi Vajpeyi
 */
 
 using System.Linq;
@@ -30,7 +30,7 @@ public class TimeControl : MonoBehaviour {
 	public Text InvertTxt;
 	public Image InvertCheck;
 	public Toggle Invert;
-	private Movement _movement;
+	private AircraftMovement _aircraftMovement;
 	private float _targetGameOver;
 	private float _targetRestart;
 	private float _targetScore;
@@ -113,8 +113,8 @@ public class TimeControl : MonoBehaviour {
 	
 		GameObject go = Instantiate<GameObject>(PlayerPrefab, Vector3.zero, Quaternion.identity);
 		world.Player = go;
-		_movement = go.GetComponentInChildren<Movement> ();
-		go.GetComponent<ShipCollision> ().Control = this.GetComponent<TimeControl> ();
+		_aircraftMovement = go.GetComponentInChildren<AircraftMovement> ();
+//		go.GetComponent<AircraftCollider> ().Control = this.GetComponent<TimeControl> ();  // UNCOMMENT 
 		GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<FollowShip>().TargetShip = go;
 
 		yield return null;
@@ -175,17 +175,17 @@ public class TimeControl : MonoBehaviour {
 		if(!Using)
 			WasPressed = Input.GetKey(KeyCode.Space);
 
-		if (!_movement.IsInSpawn)
+		if (!_aircraftMovement.IsInSpawn)
 			_score += Time.deltaTime * 8;
 	
 		if (_score < 125)
-			_movement.Speed = 12;
+			_aircraftMovement.Speed = 12;
 		else if (_score < 275)
-			_movement.Speed = 14;
+			_aircraftMovement.Speed = 14;
 		else if(_score < 500)
-			_movement.Speed = 16;
+			_aircraftMovement.Speed = 16;
 		else if(_score < 1000)
-			_movement.Speed = 18;
+			_aircraftMovement.Speed = 18;
 			
 	}
 

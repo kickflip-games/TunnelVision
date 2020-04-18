@@ -1,5 +1,5 @@
 ﻿/*
- *Written by Maxi Levi <maxilevi@live.com>, November 2017
+ *Written by Avi Vajpeyi
 */
 
 using System.Collections;
@@ -28,6 +28,7 @@ public class World : MonoBehaviour {
 
 	void Update(){
 
+		Player = GameObject.FindGameObjectWithTag("player");
 		PlayerPosition = Player.transform.position;
 		PlayerOrientation = Player.transform.forward;
 
