@@ -50,6 +50,7 @@ namespace Assets.Generation
 
 		private IEnumerator LoadChunks()
         {
+	        Debug.Log("Staring to load chunks...");
 			while (true)
             {
 				//break;
@@ -98,6 +99,7 @@ namespace Assets.Generation
 
 		private IEnumerator ManageChunksMesh()
         {
+	        Debug.Log("Beginning chunk mesh mangement...");
 			while (true)
             {
 				if(Stop) break;

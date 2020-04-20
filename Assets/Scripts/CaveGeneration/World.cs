@@ -67,6 +67,7 @@ public class World : MonoBehaviour {
 
     public void AddChunk(Vector3 Offset, Chunk Chunk)
     {
+//	    Debug.Log("Adding chunk");
 		lock (this.Chunks) {
 			if (!this.Chunks.ContainsKey (Offset)) {
 				this.Chunks.Add (Offset, Chunk);
@@ -75,6 +76,7 @@ public class World : MonoBehaviour {
 		}
     }
     public void RemoveChunk(Chunk Chunk) { 
+	    //Debug.Log("Removing chunk");
 		lock(Chunks){
 			if (Chunks.ContainsKey (Chunk.Position))
 				Chunks.Remove (Chunk.Position);

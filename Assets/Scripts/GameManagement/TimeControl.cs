@@ -126,6 +126,7 @@ public class TimeControl : MonoBehaviour
 
     public void Restart()
     {
+        Debug.Log("Start Game");
         if (!Lost)
             return;
         StartCoroutine(RestartCoroutine());
@@ -276,7 +277,7 @@ public class TimeControl : MonoBehaviour
 
     void Update()
     {
-        if (Lost && Input.anyKeyDown) // Input.GetKeyDown(KeyCode.Space)
+        if (Lost && Input.GetKeyDown(KeyCode.Space))
             Restart();
 
         UpdateScoreUI();
@@ -307,4 +308,11 @@ public class TimeControl : MonoBehaviour
     {
         return new Vector2(Mathf.Lerp(a.x, b.x, d), Mathf.Lerp(b.x, b.y, d));
     }
+
+    public void QuitGame()
+    {
+        Debug.Log("QUIT");
+        Application.Quit();
+    }
+
 }
