@@ -1,5 +1,5 @@
 ﻿/*
- * Written by Maxi Levi <maxilevi@live.com>, November 2017
+ * Written by Avi Vajpeyi
  */
  
 using System;
