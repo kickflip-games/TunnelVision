@@ -14,6 +14,16 @@ public class AircraftTrail : MonoBehaviour
     public void Start()
     {
         _textureManager = transform.root.GetComponent<AircraftTextureManager>();
+        if (_trail == null)
+        {
+            _trail = gameObject.AddComponent<TrailRenderer>();
+            _trail.widthMultiplier = .25f;
+            _trail.material = _textureManager.TrailMaterial;
+            _trail.time = 0.3f;
+            _trail.endColor = new Color(0, 0, 0, 0);
+            _trail.startColor = _textureManager.TrailColor;
+        }
+
     }
 
     public void ToggleTrail(bool turnOn)
@@ -23,28 +33,16 @@ public class AircraftTrail : MonoBehaviour
         else
             StopTrail();
     }
-
-    private void InitialiseTrail()
-    {
-        if (_trail == null)
-            return;
-                
-        IsOn = true;
-        _trail = gameObject.AddComponent<TrailRenderer>();
-        _trail.widthMultiplier = .25f;
-        _trail.endColor = new Color(0, 0, 0, 0);
-        _trail.startColor = _textureManager.TrailColor;
-        _trail.material = _textureManager.TrailMaterial;
-        _trail.time = 0.3f;
-        Debug.Log("Init trails");
-    }
+    
 
     private void StartTrail()
     {
-        if (_trail != null && IsOn)
-            return;
-        Debug.Log("contents " + _trail);
-        InitialiseTrail();
+        if (!IsOn)
+        {
+            IsOn = true;
+            _trail.startColor = _textureManager.TrailColor;
+        }
+
     }
 
     private IEnumerator DestroyTrail(float time)
@@ -58,11 +56,12 @@ public class AircraftTrail : MonoBehaviour
 
     private void StopTrail()
     {
-        if (_trail == null && !IsOn)
+        if (_trail == null)
             return;
         
 //        StartCoroutine(DestroyTrail(_trail.time + 1));
-        _trail = null;
+        _trail.startColor = _trail.endColor;
+
         IsOn = false;
 
         // trail.transform.parent = (_debris != null) ? _debris.transform : null;

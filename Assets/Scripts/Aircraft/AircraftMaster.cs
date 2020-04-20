@@ -9,6 +9,10 @@ public class AircraftMaster : MonoBehaviour
 
     public AudioClip ExplosionAudioClip;
     public GameObject [] RenderObjects;
+    public GameObject ShardContainer;
+    public TimeControl timeControl;
+    
+    private AudioSource _aircraftAudioSource;
     
     bool _isAlive = true;
 
@@ -16,7 +20,9 @@ public class AircraftMaster : MonoBehaviour
     void Start()
     {
         _movement = GetComponentInChildren<AircraftMovement>();
-
+        _textureManager = GetComponent<AircraftTextureManager>();
+        _aircraftAudioSource = gameObject.AddComponent<AudioSource>();
+        timeControl = FindObjectOfType<TimeControl>();
     }
 
     // Update is called once per frame
@@ -28,14 +34,21 @@ public class AircraftMaster : MonoBehaviour
     public void DestroyShip(){
         if (!_isAlive)
             return; // already being destroyed 
-
+        
+        Debug.Log("Destroying ship!");
+        
+        
+        _isAlive = false;
         _movement.Lock ();
-        // TimeControl.Lose ();
+        timeControl.Lose ();
         AircraftExplosion exp = gameObject.AddComponent<AircraftExplosion>();
         exp.SetReferences(
+            audioSource: _aircraftAudioSource,
             explosionAudio: ExplosionAudioClip,
-            renderedGameObjects: RenderObjects
+            renderedGameObjects: RenderObjects,
+            shardContainer: ShardContainer
         );
-        _isAlive = true;
+        exp.Explode();
+
     }
 }

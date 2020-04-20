@@ -50,8 +50,6 @@ public class AircraftMovement : MonoBehaviour
             AircraftTrail t = trailGo.GetComponent<AircraftTrail>();
             Trails.Add(t);
         }
-
-        Debug.Log("Trials :" + Trails.Count + " " + Trails);
     }
 
 

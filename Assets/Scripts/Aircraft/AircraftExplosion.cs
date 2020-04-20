@@ -4,37 +4,44 @@
 
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class AircraftExplosion : MonoBehaviour
 {
-    private AudioClip _explosionAudio;
+    private AudioClip _explosionAudioClip;
     private GameObject[] _renderedGameObjects;
     private AudioSource _audioSource;
+    private GameObject _shardContainer;
+    private List<GameObject> Shards = new List<GameObject>();
 
-
-    public void SetReferences(AudioClip explosionAudio, GameObject[] renderedGameObjects)
+    public void SetReferences(
+        AudioSource audioSource, 
+        AudioClip explosionAudio,
+        GameObject[] renderedGameObjects,
+        GameObject shardContainer
+        )
     {
-        _explosionAudio = explosionAudio;
+        _audioSource = audioSource;
+        _explosionAudioClip = explosionAudio;
         _renderedGameObjects = renderedGameObjects;
+        _shardContainer = shardContainer;
+        foreach (Transform shard in _shardContainer.transform)
+        {
+            Shards.Add(shard.gameObject);
+        }
     }
 
 
     public void Explode()
     {
-        SplitMeshes();
+        DisableRenderedObjects();
+        ActivateShards();
         PlayExplosionSound();
-        Destroy(this.gameObject);
     }
 
-    void Start()
-    {
-        _audioSource = FindObjectOfType<AudioSource>();
-    }
-
-    IEnumerator DestroyDebrisCoroutine(GameObject GO)
+    IEnumerator DestroyShardCoroutine(GameObject GO)
     {
         yield return new WaitForSeconds(2 + Random.Range(0.0f, 5.0f));
-        GO.GetComponent<MeshFilter>().sharedMesh.Clear();
         Destroy(GO);
     }
 
@@ -43,64 +50,29 @@ public class AircraftExplosion : MonoBehaviour
     {
         if (_audioSource != null)
         {
-            _audioSource.PlayOneShot(_explosionAudio, 0.7F);
-            Destroy(this, _audioSource.time + 0.5f);
+            Debug.Log("shatter sound");
+            _audioSource.PlayOneShot(_explosionAudioClip, 0.7F);
         }
     }
 
-    void SplitMeshes()
+    void DisableRenderedObjects()
     {
         foreach (GameObject g in _renderedGameObjects)
         {
-            SplitMesh(
-                mf: g.GetComponent<MeshFilter>(),
-                mr: g.GetComponent<MeshRenderer>()
-            );
+            g.SetActive(false);
         }
     }
 
-    void SplitMesh(MeshFilter mf, MeshRenderer mr)
+    void ActivateShards()
     {
-        Mesh M = mf.mesh;
-        Vector3[] verts = M.vertices;
-        Vector3[] normals = M.normals;
-        Vector2[] uvs = M.uv;
-        for (int submesh = 0; submesh < M.subMeshCount; submesh++)
+        foreach (GameObject shard in Shards)
         {
-            int[] indices = M.GetTriangles(submesh);
-            for (int i = 0; i < indices.Length; i += 3)
-            {
-                Vector3[] newVerts = new Vector3[3];
-                Vector3[] newNormals = new Vector3[3];
-                Vector2[] newUvs = new Vector2[3];
-                for (int n = 0; n < 3; n++)
-                {
-                    int index = indices[i + n];
-                    newVerts[n] = verts[index];
-                    newUvs[n] = uvs[index];
-                    newNormals[n] = normals[index];
-                }
-
-                Mesh mesh = new Mesh();
-                mesh.vertices = newVerts;
-                mesh.normals = newNormals;
-                mesh.uv = newUvs;
-
-                mesh.triangles = new int[] {0, 1, 2, 2, 1, 0};
-
-                GameObject GO = new GameObject("Triangle " + (i / 3));
-                GO.transform.position = transform.position;
-                GO.transform.rotation = transform.rotation;
-                GO.AddComponent<MeshRenderer>().material = mr.materials[submesh];
-                GO.AddComponent<MeshFilter>().mesh = mesh;
-                GO.AddComponent<BoxCollider>();
-                GO.AddComponent<Rigidbody>()
-                    .AddExplosionForce(20, transform.position, 30);
-
-                StartCoroutine(DestroyDebrisCoroutine(GO));
-            }
+            shard.SetActive(true);
+            Rigidbody rb = shard.GetComponent<Rigidbody>();
+            rb.isKinematic = false;
+            rb.useGravity = false;
+            rb.AddExplosionForce(50.0f, transform.position, 30);
+            StartCoroutine(DestroyShardCoroutine(shard));
         }
-
-        mr.enabled = false;
     }
 }

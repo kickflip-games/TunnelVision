@@ -25,10 +25,8 @@ public class World : MonoBehaviour {
 		_generationQueue = new GenerationQueue (this);
 		Loaded = true;
 	}
-
+	
 	void Update(){
-
-		Player = GameObject.FindGameObjectWithTag("player");
 		PlayerPosition = Player.transform.position;
 		PlayerOrientation = Player.transform.forward;
 

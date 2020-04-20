@@ -1,9 +1,4 @@
-﻿/* Copyright (C) Luaek - All Rights Reserved
- * Unauthorized copying of this file, via any medium is strictly prohibited
- * Proprietary and confidential
- * Written by Avi Vajpeyi
- */
-
+﻿
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,6 +16,7 @@ public class AircraftCollider : MonoBehaviour {
 	
 
 	void OnCollisionEnter(Collision col){
+		Debug.Log("Aircraft crashed!");
 		_master.DestroyShip ();
 	}
 }
