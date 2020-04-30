@@ -1,4 +1,5 @@
-![# Tunnel Vision](https://raw.githubusercontent.com/avivajpeyi/LudumDare46/master/Assets/Images/banner.png)
+![# Tunnel Vision](https://media.githubusercontent.com/media/avivajpeyi/TunnelVision/master/Assets/Images/banner.png)
+
 Ludum Dare 46, Theme: Keep it Alive
 
 You're a pilot of a aircraft that has to fly through procedurally generated caves.
