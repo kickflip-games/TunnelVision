@@ -298,11 +298,11 @@ public class TimeControl : MonoBehaviour
         AdjustDifficultyFromScore();
     }
 
-    public void InvertControls()
-    {
-        Options.Invert = !Options.Invert;
-        Invert.isOn = Options.Invert;
-    }
+    // public void InvertControls()
+    // {
+    //     Options.Invert = !Options.Invert;
+    //     Invert.isOn = Options.Invert;
+    // }
 
     Vector2 Lerp(Vector2 a, Vector2 b, float d)
     {

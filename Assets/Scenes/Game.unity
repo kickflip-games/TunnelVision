@@ -1177,6 +1177,11 @@ PrefabInstance:
       propertyPath: Player
       value: 
       objectReference: {fileID: 709695715}
+    - target: {fileID: 4810826059318577863, guid: e58ecad2b9bf04a61ae768329bb547b3,
+        type: 3}
+      propertyPath: WorldMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: a32f29efa5c364e9191a7e3bc974691e, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

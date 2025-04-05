@@ -122,6 +122,7 @@ namespace Assets.Generation
 
 					if ((Chunks[i].Position - _playerPosition).sqrMagnitude > (Options.ChunkLoaderRadius) * .5f * Chunk.ChunkSize * (Options.ChunkLoaderRadius) * Chunk.ChunkSize * .5f  )
                     {
+	                    Debug.Log("Removing old chunks...");
                         World.RemoveChunk(Chunks[i]);
                         continue;
                     }
