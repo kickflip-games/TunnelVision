@@ -20,7 +20,7 @@ namespace Assets
         {
             ChunkLoaderRadius = 10;
 			Lod = true;
-			Invert = true;
+			Invert = false;
         }
     }
 }
