@@ -43,14 +43,15 @@ namespace Assets.Generation
 		}
 
 		void Update(){
-			_playerPosition = Player.transform.position;
+			if (Player !=null)
+				_playerPosition = Player.transform.position;
 			_position = transform.position;
 		}
 
 
 		private IEnumerator LoadChunks()
         {
-	        Debug.Log("Staring to load chunks...");
+	        Debug.Log("Starting to load chunks...");
 			while (true)
             {
 				//break;
@@ -122,7 +123,7 @@ namespace Assets.Generation
 
 					if ((Chunks[i].Position - _playerPosition).sqrMagnitude > (Options.ChunkLoaderRadius) * .5f * Chunk.ChunkSize * (Options.ChunkLoaderRadius) * Chunk.ChunkSize * .5f  )
                     {
-	                    Debug.Log("Removing old chunks...");
+	                    // Debug.Log("Removing old chunks...");
                         World.RemoveChunk(Chunks[i]);
                         continue;
                     }

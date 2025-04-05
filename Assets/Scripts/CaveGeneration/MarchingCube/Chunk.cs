@@ -19,26 +19,49 @@ namespace Assets.Generation
 		public bool Disposed;
 
 		private Mesh _mesh;
+		private MeshRenderer _rend;
         private World _world;
         private readonly float[][][] _blocks = new float[ChunkSize][][];
         private readonly WorldGenerator _generator = new WorldGenerator();
 
 		void Start(){
-			_mesh = new Mesh (); 
-			this.gameObject.AddComponent<MeshCollider> ();
-			MeshFilter Filter = this.gameObject.AddComponent<MeshFilter>();
-			Filter.mesh = _mesh;
-			MeshRenderer Renderer = this.gameObject.AddComponent<MeshRenderer>();
-			Renderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
-			Renderer.receiveShadows = false;
-			Renderer.material = _world.WorldMaterial;
+
+			Debug.Log("Start Chunk (set init refs)");
+			SetInitRef();
+            
 		}
+
+
+		void SetInitRef()
+		{
+			if (_mesh == null)
+			{
+				_mesh = new Mesh (); 
+				this.gameObject.AddComponent<MeshCollider> ();
+				MeshFilter Filter = this.gameObject.AddComponent<MeshFilter>();
+				Filter.mesh = _mesh;
+			}
+
+			if (_rend == null)
+			{
+				MeshRenderer _rend = this.gameObject.AddComponent<MeshRenderer>();
+				_rend.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+				_rend.receiveShadows = false;
+				_rend.material = _world.WorldMaterial;
+			}
+		}
+
+		
+
 
 		public void Init(Vector3 Position, World World)
         {
+	        Debug.Log("Init chunk");
             this._world = World;
 			this.Position = Position;
             this.Lod = 1;
+
+            // SetInitRef();
         }
 
         public void Generate()
@@ -111,6 +134,8 @@ namespace Assets.Generation
 					this.GetComponent<MeshCollider> ().sharedMesh = _mesh;
 				}
 			});
+
+
 		}
 
 		private void CreateCell(float x, float y, float z, Chunk RightChunk, Chunk FrontChunk, Chunk RightFrontChunk, Chunk TopRightChunk, Chunk TopFrontChunk, Chunk TopRightFrontChunk, Chunk TopChunk, GridCell Cell, out bool Success){

@@ -27,9 +27,12 @@ public class World : MonoBehaviour {
 	}
 	
 	void Update(){
-		PlayerPosition = Player.transform.position;
-		PlayerOrientation = Player.transform.forward;
-
+		if (Player != null)
+		{
+			PlayerPosition = Player.transform.position;
+			PlayerOrientation = Player.transform.forward;
+		}
+		
 		int _genCount = 0, _meshCount = 0;
 		foreach (KeyValuePair<Vector3, Chunk> Pair in Chunks) {
 			if (!Pair.Value.IsGenerated)
@@ -67,7 +70,7 @@ public class World : MonoBehaviour {
 
     public void AddChunk(Vector3 Offset, Chunk Chunk)
     {
-//	    Debug.Log("Adding chunk");
+	    Debug.Log("Adding chunk");
 		lock (this.Chunks) {
 			if (!this.Chunks.ContainsKey (Offset)) {
 				this.Chunks.Add (Offset, Chunk);
@@ -76,7 +79,7 @@ public class World : MonoBehaviour {
 		}
     }
     public void RemoveChunk(Chunk Chunk) { 
-	    //Debug.Log("Removing chunk");
+	    Debug.Log("Removing chunk");
 		lock(Chunks){
 			if (Chunks.ContainsKey (Chunk.Position))
 				Chunks.Remove (Chunk.Position);
