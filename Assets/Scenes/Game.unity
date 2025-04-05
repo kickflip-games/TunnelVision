@@ -1185,8 +1185,13 @@ PrefabInstance:
       objectReference: {fileID: 709695715}
     - target: {fileID: 4810826059318577863, guid: e58ecad2b9bf04a61ae768329bb547b3,
         type: 3}
+      propertyPath: WorldMaterial
+      value: 
+      objectReference: {fileID: 10652, guid: 0000000000000000f000000000000000, type: 0}
+    - target: {fileID: 4810826059318577863, guid: e58ecad2b9bf04a61ae768329bb547b3,
+        type: 3}
       propertyPath: ChunkLoaderRadius
-      value: 9
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
