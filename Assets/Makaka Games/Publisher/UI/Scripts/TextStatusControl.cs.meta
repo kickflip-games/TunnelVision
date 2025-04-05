@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 22fa1685b0e7648de8fe92209753f400
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 250161
+  packageName: 'Sensor Camera (First Person): Gyroscope & Accelerometer'
+  packageVersion: 3.1
+  assetPath: Assets/Makaka Games/Publisher/UI/Scripts/TextStatusControl.cs
+  uploadId: 740368

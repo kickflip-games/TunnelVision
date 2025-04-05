@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 9e5d19c598afc47bc8e4037ef5e37075
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 250161
+  packageName: 'Sensor Camera (First Person): Gyroscope & Accelerometer'
+  packageVersion: 3.1
+  assetPath: Assets/Makaka Games/Camera/Sensor Camera/Prefabs/SensorCamera.prefab
+  uploadId: 740368

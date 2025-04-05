@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 0cbc33062d41143dda8e893869910c9d
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 250161
+  packageName: 'Sensor Camera (First Person): Gyroscope & Accelerometer'
+  packageVersion: 3.1
+  assetPath: Assets/Makaka Games/Camera/Sensor Camera/Docs/sensor-camera-documentation.pdf
+  uploadId: 740368

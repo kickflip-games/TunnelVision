@@ -1,0 +1,11 @@
+fileFormatVersion: 2
+guid: 9ea0e271d27a4df6b952de065414d326
+DefaultImporter:
+  userData: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 250161
+  packageName: 'Sensor Camera (First Person): Gyroscope & Accelerometer'
+  packageVersion: 3.1
+  assetPath: Assets/Makaka Games/Publisher/SceneControl/Scenes/LoadScreen.unity
+  uploadId: 740368
