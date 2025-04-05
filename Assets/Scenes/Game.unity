@@ -131,15 +131,6 @@ PrefabInstance:
       propertyPath: World
       value: 
       objectReference: {fileID: 271969493}
-    - target: {fileID: 1417403747, guid: a999244e136d04c79a187fb4a11d18f5, type: 3}
-      propertyPath: Player
-      value: 
-      objectReference: {fileID: 709695715}
-    - target: {fileID: 3769123245485996449, guid: a999244e136d04c79a187fb4a11d18f5,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3769123245485996449, guid: a999244e136d04c79a187fb4a11d18f5,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -277,11 +268,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8317254460004467191, guid: e5ca83e61c2714bdcb6410b040b71787,
         type: 3}
-      propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8317254460004467191, guid: e5ca83e61c2714bdcb6410b040b71787,
-        type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
       objectReference: {fileID: 0}
@@ -370,11 +356,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8924089450031094088, guid: e5ca83e61c2714bdcb6410b040b71787,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 714923385}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -480,7 +461,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: b93472c3b42e14ea8b24f50ea6c62117, type: 3}
   m_Resource: {fileID: 8300000, guid: b93472c3b42e14ea8b24f50ea6c62117, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -889,22 +870,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 194735980349420400, guid: 8346c5a2f41e24b7ba54707a22c6a21b,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 194735980349420400, guid: 8346c5a2f41e24b7ba54707a22c6a21b,
-        type: 3}
-      propertyPath: sharedProfile
-      value: 
-      objectReference: {fileID: 11400000, guid: 519667685db5b4c928f932e236d68619,
-        type: 2}
-    - target: {fileID: 194735980349420401, guid: 8346c5a2f41e24b7ba54707a22c6a21b,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 194735980349420401, guid: 8346c5a2f41e24b7ba54707a22c6a21b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1023,6 +988,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2134087009}
   - component: {fileID: 2134087008}
+  - component: {fileID: 2134087010}
   m_Layer: 0
   m_Name: Directional Light
   m_TagString: Untagged
@@ -1110,6 +1076,29 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!114 &2134087010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2134087007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Version: 3
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_LightLayerMask: 1
+  m_RenderingLayers: 1
+  m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_ShadowRenderingLayers: 1
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
+  m_SoftShadowQuality: 0
 --- !u!1001 &4810826059586315794
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1118,11 +1107,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4810826059318577860, guid: e58ecad2b9bf04a61ae768329bb547b3,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4810826059318577860, guid: e58ecad2b9bf04a61ae768329bb547b3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1183,16 +1167,6 @@ PrefabInstance:
       propertyPath: Player
       value: 
       objectReference: {fileID: 709695715}
-    - target: {fileID: 4810826059318577863, guid: e58ecad2b9bf04a61ae768329bb547b3,
-        type: 3}
-      propertyPath: WorldMaterial
-      value: 
-      objectReference: {fileID: 10652, guid: 0000000000000000f000000000000000, type: 0}
-    - target: {fileID: 4810826059318577863, guid: e58ecad2b9bf04a61ae768329bb547b3,
-        type: 3}
-      propertyPath: ChunkLoaderRadius
-      value: 7
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -44,10 +44,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c71cb94ae400d478ea9e117b7727f82c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 8321898492206318412, guid: d43cc6d5550004731b1102555225d149, type: 3}
+  Player: {fileID: 0}
   WorldMaterial: {fileID: 2100000, guid: cceb1d55f09cb0c418a40404008559f5, type: 2}
   PlayerPosition: {x: 0, y: 0, z: 0}
   PlayerOrientation: {x: 0, y: 0, z: 0}
   GenQueue: 0
   MeshQueue: 0
-  ChunkLoaderRadius: 9
+  ChunkLoaderRadius: 7
