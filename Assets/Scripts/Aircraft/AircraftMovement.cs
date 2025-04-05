@@ -7,7 +7,7 @@ using Assets.Generation;
 public class AircraftMovement : MonoBehaviour
 {
     public float Speed = 16;
-    public float TurnSpeed = 4f;
+    public float TurnSpeed = 3f;
 
     public List<AircraftTrail> Trails = new List<AircraftTrail>();
     public GameObject[] TrailPositionsMarkers;
@@ -16,7 +16,7 @@ public class AircraftMovement : MonoBehaviour
     private bool _lock = false;
     private float _speed = 0;
 
-    // --- Fields for smoothed rotation input ---
+    // --- Input and smoothing variables ---
     private Mouse mouse;
     [SerializeField]
     private float smoothTime = 0.1f;
@@ -27,13 +27,12 @@ public class AircraftMovement : MonoBehaviour
 
     [Header("Sensitivity Settings")]
     [SerializeField]
-    private float mouseSensitivity = 0.1f;    // Sensitivity multiplier for mouse input
-
+    private float mouseSensitivity = 0.1f;    // Scales mouse movement
     [SerializeField]
-    private float keyboardSensitivity = 3f;   // Sensitivity multiplier for keyboard (WASD) input
+    private float keyboardSensitivity = 3f;   // Scales WASD (keyboard) input
 
     /// <summary>
-    /// Check if the aircraft is within the spawn area (used to check if it should be given score)
+    /// Check if the aircraft is within the spawn area (used for scoring, etc.)
     /// </summary>
     public bool IsInSpawn
     {
@@ -62,20 +61,12 @@ public class AircraftMovement : MonoBehaviour
     {
         InitialiseTrails();
         Unlock();
-
-        // Try to initialize mouse input from the new Input System.
+        // Initialize mouse input from the new Input System.
         mouse = Mouse.current;
     }
 
-    public void Lock()
-    {
-        _lock = true;
-    }
-
-    public void Unlock()
-    {
-        _lock = false;
-    }
+    public void Lock() { _lock = true; }
+    public void Unlock() { _lock = false; }
 
     /// <summary>
     /// Returns true if the aircraft is turning enough to display trails.
@@ -86,10 +77,8 @@ public class AircraftMovement : MonoBehaviour
         {
             float zAngle = transform.localRotation.eulerAngles.z;
             float xAngle = transform.localRotation.eulerAngles.x;
-            if ((zAngle > 45 && zAngle < 135) || (zAngle > 225 && zAngle < 315) ||
-                (xAngle > 45 && xAngle < 90) || (xAngle > 270 && xAngle < 315))
-                return true;
-            return false;
+            return ((zAngle > 45 && zAngle < 135) || (zAngle > 225 && zAngle < 315) ||
+                    (xAngle > 45 && xAngle < 90) || (xAngle > 270 && xAngle < 315));
         }
     }
 
@@ -110,33 +99,28 @@ public class AircraftMovement : MonoBehaviour
     }
 
     /// <summary>
-    /// Rotates the aircraft based on input delta values.
-    /// The sensitivity parameter allows using different multipliers for mouse vs. keyboard.
+    /// Applies the rotation to the aircraft using the combined, smoothed input.
     /// </summary>
-    /// <param name="hDelta">Smoothed horizontal input</param>
-    /// <param name="vDelta">Smoothed vertical input</param>
-    /// <param name="sensitivity">Sensitivity multiplier</param>
-    void TurnAndRotate(float hDelta, float vDelta, float sensitivity)
+    /// <param name="hDelta">Horizontal delta</param>
+    /// <param name="vDelta">Vertical delta</param>
+    void TurnAndRotate(float hDelta, float vDelta)
     {
         float scale = (Time.timeScale != 1) ? (1 / Time.timeScale) * 0.5f : 1;
         float rate = Time.deltaTime * 64f * TurnSpeed * scale;
 
-        float scaledH = hDelta * sensitivity;
-        float scaledV = vDelta * sensitivity;
-
         // Vertical rotation (pitch)
-        Vector3 verticalTurn = Vector3.right * rate * scaledV;
+        Vector3 verticalTurn = Vector3.right * rate * vDelta;
         if (Options.Invert)
             transform.localRotation = Quaternion.Euler(transform.localRotation.eulerAngles + verticalTurn);
         else
             transform.localRotation = Quaternion.Euler(transform.localRotation.eulerAngles - verticalTurn);
 
         // Horizontal rotation (roll)
-        Vector3 horizontalTurn = Vector3.forward * rate * scaledH;
+        Vector3 horizontalTurn = Vector3.forward * rate * hDelta;
         transform.localRotation = Quaternion.Euler(transform.localRotation.eulerAngles - horizontalTurn);
 
         // Yaw rotation by rotating the parent transform
-        transform.parent.Rotate(Vector3.up * rate * scaledH);
+        transform.parent.Rotate(Vector3.up * rate * hDelta);
     }
 
     // Update is called once per frame
@@ -148,27 +132,27 @@ public class AircraftMovement : MonoBehaviour
         MoveForward();
         AdjustTrails();
 
-        // Use mouse input if available; otherwise, fallback to WASD (keyboard) input.
+        // Get mouse contribution (if available)
+        Vector2 mouseInput = Vector2.zero;
         if (mouse != null)
         {
-            Vector2 mouseDelta = mouse.delta.ReadValue();
-            float targetHorizontalDelta = mouseDelta.x;
-            float targetVerticalDelta = mouseDelta.y;
-
-            horizontalDelta = Mathf.SmoothDamp(horizontalDelta, targetHorizontalDelta, ref horizontalVelocity, smoothTime, Mathf.Infinity, Time.deltaTime);
-            verticalDelta = Mathf.SmoothDamp(verticalDelta, targetVerticalDelta, ref verticalVelocity, smoothTime, Mathf.Infinity, Time.deltaTime);
-
-            TurnAndRotate(horizontalDelta, verticalDelta, mouseSensitivity);
+            // Multiply by mouseSensitivity here
+            mouseInput = mouse.delta.ReadValue() * mouseSensitivity;
         }
-        else
-        {
-            float hInput = Input.GetAxisRaw("Horizontal");
-            float vInput = Input.GetAxisRaw("Vertical");
 
-            horizontalDelta = Mathf.SmoothDamp(horizontalDelta, hInput, ref horizontalVelocity, smoothTime, Mathf.Infinity, Time.deltaTime);
-            verticalDelta = Mathf.SmoothDamp(verticalDelta, vInput, ref verticalVelocity, smoothTime, Mathf.Infinity, Time.deltaTime);
+        // Get keyboard contribution from WASD
+        Vector2 keyboardInput = new Vector2(
+            Input.GetAxisRaw("Horizontal") * keyboardSensitivity,
+            Input.GetAxisRaw("Vertical") * keyboardSensitivity);
 
-            TurnAndRotate(horizontalDelta, verticalDelta, keyboardSensitivity);
-        }
+        // Combine the two input sources
+        Vector2 combinedTarget = mouseInput + keyboardInput;
+
+        // Smooth the combined input values
+        horizontalDelta = Mathf.SmoothDamp(horizontalDelta, combinedTarget.x, ref horizontalVelocity, smoothTime, Mathf.Infinity, Time.deltaTime);
+        verticalDelta = Mathf.SmoothDamp(verticalDelta, combinedTarget.y, ref verticalVelocity, smoothTime, Mathf.Infinity, Time.deltaTime);
+
+        // Apply rotation based on the smoothed, combined delta
+        TurnAndRotate(horizontalDelta, verticalDelta);
     }
 }
